@@ -1,0 +1,4 @@
+equation1 point1 meterial 
+equation2 point2 meterial2 type2
+eaquation3 point3 meterial3 type3
+equation4 point4 meterial4 type4
