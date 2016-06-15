@@ -7,8 +7,9 @@
 备注：
 =end
 class Path
-  attr_accessor :plane #面方程数组
-  attr_accessor :point #凸点坐标数组
-  attr_accessor :material #面材质
-  attr_accessor :type #面类型
+  attr_accessor :neId #网元ID
+  attr_accessor :ueId #终端ID
+  attr_accessor :loss #损耗
+  attr_accessor :delay #时延
+  attr_accessor :coordinate #几何路径坐标
 end
