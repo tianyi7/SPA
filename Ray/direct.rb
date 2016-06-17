@@ -15,6 +15,27 @@ require File.join(File.expand_path(".."),'/Space/intersect')
 require File.join(File.expand_path(".."),'/Space/verifyPoint')
 require File.join(File.expand_path(".."),'/Delay/delay')
 require File.join(File.expand_path(".."),'/Loss/directLoss')
+require File.join(File.expand_path(".."),'/Entity/Sign')
+require File.join(File.expand_path(".."),'/Entity/Plane')
+require File.join(File.expand_path(".."),'/Space/distance')
+def direct(beginPoint,endPoint,singal)
+  directPoint = [beginPoint,endPoint] #交点数组
+  pointNumber = directPoint.length
+  directDelay = delay(directPoint,pointNumber) #计算时延
+  directDistance = distance(directPoint,pointNumber) #计算距离
+  directLossValue = directLoss(singal.strength,singal.frequency,directDistance) #计算损耗
+  directPath = [directLossValue,directDelay,directPoint] #直射路径数组
+  return directPath
+end
+
+
+
+
+
+
+
+=begin
+原直射方法
 def direct(beginPoint,endPoint,planeArray,singal)
   directPoint = [beginPoint,endPoint] #交点数组
   pointNumber = directPoint.length
@@ -22,7 +43,7 @@ def direct(beginPoint,endPoint,planeArray,singal)
     interPoint = intersect(beginPoint,endPoint,plane.point,plane.equation) #求直线和平面交点
     pointResult = verifyPoint(beginPoint,endPoint,interPoint) #计算交点
     if pointResult == 1 then
-      return directPoint #无直射路径返回初始交点数组
+      return 1 #无直射路径返回1
     end
   end
   directDelay = delay(directPoint,pointNumber) #计算时延
@@ -32,3 +53,18 @@ def direct(beginPoint,endPoint,planeArray,singal)
   return directPath
 end
 
+=end
+
+=begin
+测试数据
+beginPoint = [0,100,0]
+endPoint = [0,-200,0]
+singal = Sign.new
+singal.strength = 100
+plane1 = Plane.new
+plane1.equation = [0,1,0,0]
+plane1.point = [[10,0,-10],[10,0,10],[-10,0,10],[-10,0,-10]]
+planeArray = Array.new
+planeArray.push(plane1)
+p direct(beginPoint,endPoint,planeArray,singal)
+=end

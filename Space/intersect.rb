@@ -23,7 +23,7 @@ def intersect(beginPoint,endPoint,planeCoordinate,plane)
         return intersectPoint
     end
 
-    t = (a*x1+b*y1+c*z1+d)/(a*x2+b*y2+c*z2+d)#系数t计算
+    t = (a*x1+b*y1+c*z1+d)*1.0/(a*x2+b*y2+c*z2+d)#系数t计算,注意乘以1.0,否则取整数
     #直线和平面相交点计算结果坐标
     x,y,z = (x1-t*x2)/(1-t),(y1-t*y2)/(1-t),(z1-t*z2)/(1-t)
     #如果相交坐标在平面外，返回直线终点坐标

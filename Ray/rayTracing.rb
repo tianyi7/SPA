@@ -20,7 +20,9 @@ def rayTracing
   endPoint = [2000,10000,2000]
   #beginPoint =[ARGV[0].to_f,ARGV[1].to_f,ARGV[2].to_f]
   #endPoint = [ARGV[3].to_f,ARGV[4].to_f,ARGV[5].to_f]
-  reflectPointArray = reflect(beginPoint,endPoint,planeArray)
+  singal = Sign.new
+  singal.strength = 100
+  reflectPointArray = reflect(beginPoint,endPoint,planeArray,singal)
   return reflectPointArray
 end
 

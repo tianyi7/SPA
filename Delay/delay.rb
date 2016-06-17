@@ -16,7 +16,6 @@ def delay(path,n)
   len = 0.0
   for i in 0..n-2
     len = len + length(path[i],path[i+1])
-    p len
   end
   time = len/speed
   return time;
