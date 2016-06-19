@@ -8,6 +8,7 @@
      如果直线和平面平行，返回起点坐标数组
      如果直线和平面交点不在平面内，或者不在直线两个端点之内，返回终点坐标数组
 =end
+require File.join(File.expand_path(".."),'/IO/SPA_Write')
 def intersect(beginPoint,endPoint,planeCoordinate,plane)
 
     x1,y1,z1 = beginPoint
@@ -26,6 +27,8 @@ def intersect(beginPoint,endPoint,planeCoordinate,plane)
     t = (a*x1+b*y1+c*z1+d)*1.0/(a*x2+b*y2+c*z2+d)#系数t计算,注意乘以1.0,否则取整数
     #直线和平面相交点计算结果坐标
     x,y,z = (x1-t*x2)/(1-t),(y1-t*y2)/(1-t),(z1-t*z2)/(1-t)
+    SPA_Write.baseWrite("平面",a.to_s+" "+b.to_s+" "+c.to_s+" "+d.to_s)
+    SPA_Write.baseWrite("交点坐标",x.to_s+" "+y.to_s+" "+z.to_s)
     #如果相交坐标在平面外，返回直线终点坐标
     intersectPoint = [x2,y2,z2]
 

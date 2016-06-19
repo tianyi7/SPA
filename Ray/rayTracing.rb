@@ -8,22 +8,41 @@
 日期：2016.3.20
 备注：无
 =end
-require File.join(File.expand_path(".."),'/IO/readPlane')
-require File.join(File.expand_path(".."),'/IO/Log')
+require File.join(File.expand_path(".."),'/IO/SPA_Read')
 require File.join(File.expand_path(".."),'/Ray/reflect')
+require File.join(File.expand_path(".."),'/IO/SPA_Write')
+require File.join(File.expand_path(".."),'/Ray/Propagate')
+require File.join(File.expand_path(".."),'/Data/Data_Convert')
+
 def rayTracing
-  $file = File.new(File.expand_path("..")+"\\Log\\log.txt","w+")
-  #空间面方程文件名
-  filename = File.expand_path("..")+"/Doc/planeArray5.txt";
-  planeArray = readPlane(filename)
-  beginPoint = [3500,1000,1200]
-  endPoint = [2000,10000,2000]
-  #beginPoint =[ARGV[0].to_f,ARGV[1].to_f,ARGV[2].to_f]
-  #endPoint = [ARGV[3].to_f,ARGV[4].to_f,ARGV[5].to_f]
+  #创建日志文件,OSX环境
+  SPA_Write.createFile(2)
+  #数据文件名
+  planeFile = File.expand_path("..")+"/Doc/Space.txt";
+  neFile = File.expand_path("..")+"/Doc/NetElement.txt";
+  ueFile = File.expand_path("..")+"/Doc/UserEquipment.txt";
+  singalFile = File.expand_path("..")+"/Doc/Signal.txt";
+  #获取数据
+  planeArray = SPA_Read.plane(planeFile)
+  neArray = SPA_Read.ne(neFile)
+  ueArray = SPA_Read.ue(ueFile)
+  singalArray = SPA_Read.signal(singalFile)
+  beginPoint = neArray[0].coordinate
+  endPoint = ueArray[0].coordinate
   singal = Sign.new
   singal.strength = 100
-  reflectPointArray = reflect(beginPoint,endPoint,planeArray,singal)
-  return reflectPointArray
+  #reflectPointArray = reflect(beginPoint,endPoint,planeArray,singal)
+  #平面数据转换成物体数据
+  cubeArray = Data_Convert.planeToCube(planeArray)
+  #直射计算
+  directPath = Propagate.direct(beginPoint,endPoint,[],singal)
+  #绕射计算
+  refractPath = Propagate.refract(beginPoint,endPoint,cubeArray,singal)
+  refractPath2 = refract(beginPoint,endPoint,planeArray,singal)
+  #反射计算
+  reflectPath = reflect(beginPoint,endPoint,planeArray)
+  p reflectPath
+  return directPath
 end
 
 p rayTracing

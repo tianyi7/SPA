@@ -23,7 +23,7 @@ def verifyLine(beginPoint,endPoint,reflectPoint,planeArray,reflectPlane)
     beginReflectPoint = intersect(beginPoint,reflectPoint,plane.point,plane.equation)
     beginReflectPointResult = verifyPoint(beginPoint,reflectPoint,beginReflectPoint)
     if beginReflectPointResult == 0 then
-      break
+      #break
     end
 
     endReflectPoint = intersect(endPoint,reflectPoint,plane.point,plane.equation)

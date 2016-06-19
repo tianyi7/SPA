@@ -16,7 +16,7 @@ require File.join(File.expand_path(".."), '/Space/verifyPoint')
 require File.join(File.expand_path(".."), '/Space/verifyLine')
 require File.join(File.expand_path(".."), '/Ray/refract')
 require File.join(File.expand_path(".."), '/Loss/reflectLoss')
-
+=begin
 def reflect (beginPoint, endPoint, planeArray, singal)
   #定义存储反射点的数组
   reflectPointArray = Array.new
@@ -45,14 +45,13 @@ def reflect (beginPoint, endPoint, planeArray, singal)
     return reflectPathArray
   end
 end
+=end
 
 
 
 
 
-
-=begin
-反射方法老版本
+#反射方法老版本
 def reflect (beginPoint,endPoint,planeArray)
   #定义存储反射点的数组
   reflectPointArray =  Array.new
@@ -65,13 +64,7 @@ def reflect (beginPoint,endPoint,planeArray)
     if pointResult == 1 then
       next
     end
-    lineResult = verifyLine(beginPoint,endPoint,reflectPoint,planeArray,plane.equation)
-    if lineResult == 0 then
-      reflectPointArray.push(reflectPoint)
-    else
-      next
+    reflectPointArray.push(reflectPoint)
     end
-  end
   return reflectPointArray
 end
-=end

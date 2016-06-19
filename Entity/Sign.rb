@@ -7,7 +7,7 @@
 备注：
 =end
 class Sign
-  attr_accessor :netId #网元编号
+  attr_accessor :id #网元编号
   attr_accessor :data #信号数据数组
   attr_accessor :strength#信号强度
   attr_accessor :frequency#信号频率

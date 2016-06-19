@@ -12,7 +12,6 @@
 备注:透射面顺不同,折射直射算两遍
 =end
 require File.join(File.expand_path(".."),'/Ray/direct')
-require File.join(File.expand_path(".."),'/IO/readPlane')
 require File.join(File.expand_path(".."),'/Loss/refractLoss')
 require File.join(File.expand_path(".."), '/Space/SPA_Angle')
 def refract(beginPoint,endPoint,planeArray,singal)
