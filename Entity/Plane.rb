@@ -7,6 +7,7 @@
 备注：
 =end
 class Plane
+  attr_accessor :id #平面编号
   attr_accessor :equation #面方程数组
   attr_accessor :point ##凸点坐标数
   attr_accessor :material #面材质

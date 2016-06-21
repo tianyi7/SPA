@@ -20,12 +20,15 @@ module SPA_Read
   def plane(filename)
     planeArray = Array.new
     file = File.open(filename)
+    planeId = 1
     file.each_line do |line|
       lineArray = line.split() #将每一行字符串以空格作为分隔符进行分离并保存到数组中
       for i in 0..lineArray.size
         lineArray[i] = lineArray[i].to_f
       end
       plane = Plane.new
+      plane.id = 100000+planeId #平面编号
+      planeId = planeId+1 #编号自增
       plane.equation = lineArray[0, 4] #前四个表示为平面方程
       plane.point = [lineArray[4, 3], lineArray[7, 3], lineArray[10, 3], lineArray[13, 3]] #凸点坐标数组
       #plane.material = lineArray[16]#平面材质

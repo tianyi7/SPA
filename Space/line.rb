@@ -19,4 +19,4 @@ def line(beginPoint,endPoint)
     return line
 end
 
-#puts line([1,2,3],[2,6,5])
+puts line([1,2,3],[2,6,5])

@@ -19,6 +19,7 @@ require File.join(File.expand_path(".."), '/Entity/Sign')
 require File.join(File.expand_path(".."), '/Entity/Plane')
 require File.join(File.expand_path(".."), '/Space/distance')
 require File.join(File.expand_path(".."), '/Space/SPA_Space')
+require File.join(File.expand_path(".."), '/Space/SPA_Space')
 module Propagate
   #直射
   def direct(beginPoint, endPoint, planeArray, singal)
@@ -44,7 +45,6 @@ module Propagate
     directPath = direct(beginPoint, endPoint, [], singal) #计算直射的路径数组
     refractLossValue = directPath[0] #直射损耗设置为折射初始损耗值
     refractDelay = directPath[1] #直射时延
-    pointDistanceHash = Hash.new
     refractPointArray = [beginPoint]
     cubeArray.each do |cube|
       tempRefractPointArray = Array.new
@@ -55,11 +55,11 @@ module Propagate
           tempRefractPointArray.push(interPoint)
         end
       end
-
-      #pointDistance1 = SPA_Space.pointDistance(beginPoint,tempRefractPointArray[0])
-      #pointDistance2 = SPA_Space.pointDistance(beginPoint,tempRefractPointArray[1])
-      #pointDistanceHash[pointDistance1] = tempRefractPointArray[0]
-      #pointDistanceHash[pointDistance2] = tempRefractPointArray[1]
+      pointDistance1 = SPA_Space.pointDistance(beginPoint,tempRefractPointArray[0])
+      pointDistance2 = SPA_Space.pointDistance(beginPoint,tempRefractPointArray[1])
+      if pointDistance1<pointDistance2 then
+        
+      end
     end
     #按照距离排序
     pointDistanceHash.sort

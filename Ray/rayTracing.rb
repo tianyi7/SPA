@@ -9,12 +9,13 @@
 备注：无
 =end
 require File.join(File.expand_path(".."),'/IO/SPA_Read')
-require File.join(File.expand_path(".."),'/Ray/reflect')
 require File.join(File.expand_path(".."),'/IO/SPA_Write')
 require File.join(File.expand_path(".."),'/Ray/Propagate')
 require File.join(File.expand_path(".."),'/Data/Data_Convert')
+require File.join(File.expand_path(".."),'/Ray/Ray_Refract')
 
 def rayTracing
+  p "rayTracing"
   #创建日志文件,OSX环境
   SPA_Write.createFile(2)
   #数据文件名
@@ -31,18 +32,19 @@ def rayTracing
   endPoint = ueArray[0].coordinate
   singal = Sign.new
   singal.strength = 100
-  #reflectPointArray = reflect(beginPoint,endPoint,planeArray,singal)
   #平面数据转换成物体数据
   cubeArray = Data_Convert.planeToCube(planeArray)
+  Ray_Refract.refract(beginPoint,endPoint,cubeArray,singal)
+  #reflectPointArray = reflect(beginPoint,endPoint,planeArray,singal)
   #直射计算
-  directPath = Propagate.direct(beginPoint,endPoint,[],singal)
+  #directPath = Propagate.direct(beginPoint,endPoint,[],singal)
   #绕射计算
-  refractPath = Propagate.refract(beginPoint,endPoint,cubeArray,singal)
-  refractPath2 = refract(beginPoint,endPoint,planeArray,singal)
+  #refractPath = Propagate.refract(beginPoint,endPoint,cubeArray,singal)
+  #refractPath2 = refract(beginPoint,endPoint,planeArray,singal)
   #反射计算
-  reflectPath = reflect(beginPoint,endPoint,planeArray)
-  p reflectPath
-  return directPath
+  #reflectPath = reflect(beginPoint,endPoint,planeArray)
+  #return directPath
 end
 
 p rayTracing
+

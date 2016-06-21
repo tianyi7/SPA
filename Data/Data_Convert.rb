@@ -12,16 +12,17 @@
 备注:
 =end
 require File.join(File.expand_path(".."), '/Entity/Cube')
+require File.join(File.expand_path(".."),'/IO/SPA_Write')
 module Data_Convert
   #平面数组转换成物体数组
   def planeToCube(planeArray)
-
+    p "模块:Data_Conver 方法:planeToCube"
     cubeArray = Array.new
     planeNumber = planeArray.length
     cubeNumber = planeNumber/6
     for i in 0..cubeNumber-1
       cube = Cube.new
-      cube.id = i
+      cube.id = 10001+i
       cube.plane = [planeArray[i*6],planeArray[i*6+1],planeArray[i*6+2],planeArray[i*6+3],planeArray[i*6+4],planeArray[i*6+5]]
       cubeArray.push(cube)
     end
