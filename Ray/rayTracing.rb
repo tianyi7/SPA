@@ -34,7 +34,7 @@ def rayTracing
   singal.strength = 100
   #平面数据转换成物体数据
   cubeArray = Data_Convert.planeToCube(planeArray)
-  Ray_Refract.refract(beginPoint,endPoint,cubeArray,singal)
+  p Ray_Refract.refract(beginPoint,endPoint,cubeArray,singal)
   #reflectPointArray = reflect(beginPoint,endPoint,planeArray,singal)
   #直射计算
   #directPath = Propagate.direct(beginPoint,endPoint,[],singal)

@@ -11,6 +11,7 @@
 时间:下午5:03
 备注:
 =end
+include Math
 module Space_Base
   #两点之间的距离
   def pointDistance(beginPoint, endPoint)
@@ -59,7 +60,7 @@ module Space_Base
   end
 
   #计算直线和平面夹角
-  def angle(beginPoint, endPoint, planeEquation)
+  def linePlaneAngle(beginPoint, endPoint, planeEquation)
     x1, y1, z1 = beginPoint
     x2, y2, z2 = endPoint
     m, n, p = x2-x1, y2-y1, z2-z1
@@ -67,6 +68,7 @@ module Space_Base
     n = PI/2-asin((a*m+b*n+c*p).abs/(Math.sqrt(a*a+b*b+c*c)*Math.sqrt(m*m+n*n+p*p)))
     return n
   end
+  module_function :linePlaneAngle
 
   #计算物体中心坐标
   def cubeCenter(cube)
@@ -83,4 +85,17 @@ module Space_Base
   end
 
   module_function :cubeCenter
+
+  #计算路径传播时延
+  def pathDelay(path,n)
+    speed = 300000000.0
+    len = 0.0
+    for i in 0..n-2
+      len = len + pointDistance(path[i],path[i+1])
+    end
+    delay = len*1.0/speed
+    return delay;
+  end
+
+  module_function :pathDelay
 end

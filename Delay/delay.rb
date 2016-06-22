@@ -7,7 +7,7 @@
 功能：计算传播时延
 作者：刘洋
 日期：2016.6.13
-备注：无
+备注：删除
 =end
 include Math
 def delay(path,n)
