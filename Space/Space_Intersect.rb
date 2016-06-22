@@ -124,4 +124,5 @@ module Space_Intersect
   end
 
   module_function :verifyEquation
+
 end
