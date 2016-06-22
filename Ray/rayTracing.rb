@@ -10,7 +10,6 @@
 =end
 require File.join(File.expand_path(".."),'/IO/SPA_Read')
 require File.join(File.expand_path(".."),'/IO/SPA_Write')
-require File.join(File.expand_path(".."),'/Ray/Propagate')
 require File.join(File.expand_path(".."),'/Data/Data_Convert')
 require File.join(File.expand_path(".."),'/Ray/Ray_Refract')
 require File.join(File.expand_path(".."),'/Ray/Ray_Reflect')
