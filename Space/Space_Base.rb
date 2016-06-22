@@ -58,6 +58,7 @@ module Space_Base
     mirrorPoint =[x1,y1,z1]
     return mirrorPoint
   end
+  module_function :mirrorPoint
 
   #计算直线和平面夹角
   def linePlaneAngle(beginPoint, endPoint, planeEquation)

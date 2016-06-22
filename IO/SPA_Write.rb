@@ -17,26 +17,46 @@ module SPA_Write
     time = Time.new
     if mode == 1
       #Windows环境路径
-      @@file = File.new(File.expand_path("..")+'\\Log\\log'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
+      @@logFile = File.new(File.expand_path("..")+'\\Log\\log'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
+      @@pathFile = File.new(File.expand_path("..")+'\\Log\\path'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
     else
       #OS X环境路径
-      @@file = File.new(File.expand_path("..")+'//Log//log'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
+      @@logFile = File.new(File.expand_path("..")+'//Log//log'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
+      @@pathFile = File.new(File.expand_path("..")+'//Log//path'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
     end
   end
+
   module_function :createFile
 
   #基本写文件函数
-  def baseWrite(note,content)
-      @@file.syswrite(note+" "+content+"\n")
+  def baseWrite(note, content)
+    @@logFile.syswrite(note+" "+content+"\n")
   end
+
   module_function :baseWrite
+
+  #写入路径文件
+  def pathWrite(pathArray)
+    pathArray.each do |path|
+      for i in 0..path[2].length-1
+        for j in 0..2
+          @@pathFile.syswrite(path[2][i][j].to_s+" ")
+          end
+        end
+    end
+    @@pathFile.syswrite("\n")
+  end
+
+  module_function :pathWrite
 
   #数组写文件函数
   def arrayWrite(array)
     array.each do |arr|
-      @@file.syswrite("\n")
+
+      @@outfile.syswrite("\n")
     end
   end
+
   module_function :arrayWrite
 
 end

@@ -15,15 +15,18 @@ require File.join(File.expand_path(".."), '/Space/Space_Intersect')
 require File.join(File.expand_path(".."), '/Space/Space_Base')
 require File.join(File.expand_path(".."), '/Loss/Loss_Direct')
 require File.join(File.expand_path(".."), '/Loss/Loss_Refract')
+require File.join(File.expand_path(".."), '/Ray/Ray_Direct')
 module Ray_Refract
   #绕射计算主函数
   def refract(beginPoint, endPoint, cubeArray, singal)
+    p "Module: Ray_Refract Method: refract"
     refractPointArray = [beginPoint] #折射点数组
     refractSingalValue = singal.strength #折射信号值
     preRefractPoint = beginPoint #默认前一个反射点为起始点
     sortCubeArray = interSortCube(beginPoint, endPoint, cubeArray)
     if sortCubeArray.length == 0 then
-      #直射传播
+      directPah = Ray_Direct.direct(beginPoint,endPoint,singal)
+      return  #直射传播
     end
     #遍历物体
     sortCubeArray.each do |cube|
@@ -38,6 +41,9 @@ module Ray_Refract
           planeHash[pointDistance] = plane
           pointHash[pointDistance] = interPoint
         end
+      end
+      if planeHash.length < 2
+        next
       end
       planeHash = planeHash.sort #折射面排序
       pointHash = pointHash.sort #折射点排序
@@ -61,7 +67,6 @@ module Ray_Refract
     refractDelay = Space_Base.pathDelay(refractPointArray,refractPointArray.length) #折射时延
     refractPath = [refractSingalValue,refractDelay,refractPointArray] #折射路径
     tempDelay = Space_Base.pathDelay([beginPoint,endPoint],2)
-    p "传播时延:#{tempDelay}"
     return refractPath
   end
 
@@ -70,6 +75,7 @@ module Ray_Refract
 
   #计算与直线相交的物体,并按照距离排序
   def interSortCube(beginPoint, endPoint, cubeArray)
+    p "Module: Ray_Refract Method: interSortCube"
     cubeHash = Hash.new
     sortCubeArray = Array.new
     cubeArray.each do |cube|
@@ -78,6 +84,9 @@ module Ray_Refract
         pointResult = Space_Intersect.verifyPoint(beginPoint, endPoint, interPoint)
         if pointResult == 0 then
           pointDistance = Space_Base.pointDistance(beginPoint, interPoint)
+          if pointDistance.nan? == true
+            pointDistance = 0 #处理NaN
+          end
           cubeHash[pointDistance] = cube
           break
         end

@@ -9,7 +9,6 @@
 备注：无
 =end
 require File.join(File.expand_path(".."), '/Entity/Plane')
-require File.join(File.expand_path(".."), '/Space/line')
 require File.join(File.expand_path(".."), '/Space/intersect')
 require File.join(File.expand_path(".."), '/Space/mirrorPoint')
 require File.join(File.expand_path(".."), '/Space/verifyPoint')

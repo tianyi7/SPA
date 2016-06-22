@@ -13,6 +13,7 @@ require File.join(File.expand_path(".."),'/IO/SPA_Write')
 require File.join(File.expand_path(".."),'/Ray/Propagate')
 require File.join(File.expand_path(".."),'/Data/Data_Convert')
 require File.join(File.expand_path(".."),'/Ray/Ray_Refract')
+require File.join(File.expand_path(".."),'/Ray/Ray_Reflect')
 
 def rayTracing
   p "rayTracing"
@@ -34,7 +35,6 @@ def rayTracing
   singal.strength = 100
   #平面数据转换成物体数据
   cubeArray = Data_Convert.planeToCube(planeArray)
-  p Ray_Refract.refract(beginPoint,endPoint,cubeArray,singal)
   #reflectPointArray = reflect(beginPoint,endPoint,planeArray,singal)
   #直射计算
   #directPath = Propagate.direct(beginPoint,endPoint,[],singal)
@@ -42,8 +42,9 @@ def rayTracing
   #refractPath = Propagate.refract(beginPoint,endPoint,cubeArray,singal)
   #refractPath2 = refract(beginPoint,endPoint,planeArray,singal)
   #反射计算
-  #reflectPath = reflect(beginPoint,endPoint,planeArray)
-  #return directPath
+  reflectPath = Ray_Reflect.reflect(beginPoint,endPoint,cubeArray,singal)
+  SPA_Write.pathWrite(reflectPath)
+  return reflectPath
 end
 
 p rayTracing
