@@ -30,4 +30,13 @@ module Data_Convert
   end
   module_function :planeToCube
 
+  def pathToSignalPath(pathArray)
+
+  end
+  module_function :pathToSignalPath
+
+  def pathToSpacePath(pathArray)
+
+  end
+  module_function :pathToSpacePath
 end

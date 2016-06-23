@@ -22,7 +22,7 @@ module SPA_Write
     else
       #OS X环境路径
       @@logFile = File.new(File.expand_path("..")+'//Log//log'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
-      @@pathFile = File.new(File.expand_path("..")+'//Log//path'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
+      @@pathFile = File.new(File.expand_path("..")+'//Log//path'+".txt", "w+")
     end
   end
 

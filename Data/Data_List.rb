@@ -12,13 +12,20 @@
 备注:
 =end
 module Data_List
-  material = {1001=> 10,1002=>20}#材质散列
-  #材质介电系数
-  #材质磁导率
-  #材质电导率
-  def materialById(id)
 
+  #获取平面参数数组方法
+  def planeArgById(planeId)
+    #材质介电系数
+    #材质磁导率
+    #材质电导率
+    #平面参数库数组
+    planeArgArray = [[0.0,0.067,0.000001256,0.000001256,0.00000000000885,0.0000000000531]
+    ]
+    #平面参数散列
+    planeArgHash = {1001=>planeArgArray[0]}
+     return planeArgArray[0]
   end
+  module_function :planeArgById
 
   #网元的
 

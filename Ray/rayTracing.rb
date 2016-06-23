@@ -27,22 +27,19 @@ def rayTracing
   planeArray = SPA_Read.plane(planeFile)
   neArray = SPA_Read.ne(neFile)
   ueArray = SPA_Read.ue(ueFile)
-  singalArray = SPA_Read.signal(singalFile)
+  signalArray = SPA_Read.signal(singalFile)
   beginPoint = neArray[0].coordinate
   endPoint = ueArray[0].coordinate
-  singal = Sign.new
-  singal.strength = 100
+  singal = signalArray[0]
   #平面数据转换成物体数据
   cubeArray = Data_Convert.planeToCube(planeArray)
-  #reflectPointArray = reflect(beginPoint,endPoint,planeArray,singal)
   #直射计算
-  #directPath = Propagate.direct(beginPoint,endPoint,[],singal)
-  #绕射计算
-  #refractPath = Propagate.refract(beginPoint,endPoint,cubeArray,singal)
-  #refractPath2 = refract(beginPoint,endPoint,planeArray,singal)
+  #折射计算
+  refractPath = Ray_Refract.refract(beginPoint,endPoint,cubeArray,singal)
   #反射计算
   reflectPath = Ray_Reflect.reflect(beginPoint,endPoint,cubeArray,singal)
   SPA_Write.pathWrite(reflectPath)
+  p refractPath
   return reflectPath
 end
 

@@ -85,7 +85,7 @@ module SPA_Read
 
   #读取信号
   def signal(filename)
-    singalArray = Array.new
+    signalArray = Array.new
     file = File.open(filename)
     file.each_line do |line|
       lineArray = line.split() #将每一行字符串以空格作为分隔符进行分离并保存到数组中
@@ -94,13 +94,13 @@ module SPA_Read
       end
       signal = Sign.new
       signal.id = lineArray[0]
-      signal.data= lineArray[1]
-      signal.strength= lineArray[2]
-      signal.frequency = lineArray[3]
-      singalArray.push(signal)
+      signal.strength= lineArray[1]
+      signal.frequency = lineArray[2]
+      signal.data= lineArray[3]
+      signalArray.push(signal)
     end
     file.close
-    return singalArray
+    return signalArray
   end
 
   module_function :signal

@@ -15,7 +15,7 @@ require File.join(File.expand_path(".."), '/Entity/Path')
 require File.join(File.expand_path(".."), '/Entity/Sign')
 require File.join(File.expand_path(".."), '/Loss/Loss_Reflect')
 module Ray_Reflect
-  def reflect(beginPoint, endPoint, cubeArray, singal)
+  def reflect(beginPoint, endPoint, cubeArray, signal)
     p "Module: Ray_Reflect Method: reflect"
     reflectPathArray = Array.new #反射路径数组
     cubeArray.each do |cube|
@@ -27,14 +27,19 @@ module Ray_Reflect
           if verifyReflectPlane(beginPoint, reflectPoint, cube) == true then
             p "reflectPoint: #{reflectPoint}"
             reflectCubeArray = deleteCube(cube.id, cubeArray)
-            preRefractPath = Ray_Refract.refract(beginPoint, reflectPoint, reflectCubeArray, singal)
+            preRefractPath = Ray_Refract.refract(beginPoint, reflectPoint, reflectCubeArray, signal)
             preRefractSignal = preRefractPath[0]
-            reflectSingalValue = Loss_Reflect.reflect(preRefractSignal)
-            nextRefractPath = Ray_Refract.refract(reflectPoint, endPoint, reflectCubeArray, singal)
+            inReflectAngle = Space_Base.linePlaneAngle(beginPoint,reflectPoint,plane.equation)
+            reflectSignalValue = Loss_Reflect.reflect(preRefractSignal,signal.frequency,inReflectAngle,plane)
+            reflectSignal = Sign.new
+            reflectSignal.id = signal.id
+            reflectSignal.strength = reflectSignalValue
+            reflectSignal.frequency = signal.frequency
+            nextRefractPath = Ray_Refract.refract(reflectPoint, endPoint, reflectCubeArray, reflectSignal)
             reflectDelay = preRefractPath[1]+nextRefractPath[1]
-            reflectSingalValue = nextRefractPath[0]
+            reflectSignalValue = nextRefractPath[0]
             reflectPointArray = preRefractPath[2]+nextRefractPath[2]
-            reflectPath = [reflectSingalValue, reflectDelay, reflectPointArray]
+            reflectPath = [reflectSignalValue, reflectDelay, reflectPointArray]
             reflectPathArray.push(reflectPath)
           end
         end
