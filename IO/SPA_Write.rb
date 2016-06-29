@@ -19,10 +19,14 @@ module SPA_Write
       #Windows环境路径
       @@logFile = File.new(File.expand_path("..")+'\\Log\\log'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
       @@pathFile = File.new(File.expand_path("..")+'\\Log\\path'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
+      @@signalFile = File.new(File.expand_path("..")+'\\Log\\singalPath'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
+      @@spaceFile = File.new(File.expand_path("..")+'\\Log\\spacePath'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
     else
       #OS X环境路径
       @@logFile = File.new(File.expand_path("..")+'//Log//log'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
-      @@pathFile = File.new(File.expand_path("..")+'//Log//path'+".txt", "w+")
+      @@pathFile = File.new(File.expand_path("..")+'//Log//log'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
+      @@spacePathFile = File.new(File.expand_path("..")+'//Log//path'+".txt", "w+")
+      @@signalPathFile = File.new(File.expand_path("..")+'//Log//signalPath'+time.year.to_s+time.month.to_s+time.day.to_s+".txt", "w+")
     end
   end
 
@@ -35,28 +39,51 @@ module SPA_Write
 
   module_function :baseWrite
 
-  #写入路径文件
+  #写入总路径文件
   def pathWrite(pathArray)
-    pathArray.each do |path|
-      for i in 0..path[2].length-1
-        for j in 0..2
-          @@pathFile.syswrite(path[2][i][j].to_s+" ")
-          end
-        end
-    end
-    @@pathFile.syswrite("\n")
+
   end
 
   module_function :pathWrite
 
-  #数组写文件函数
-  def arrayWrite(array)
-    array.each do |arr|
-
-      @@outfile.syswrite("\n")
+  #写入信号路径文件
+  def signalPathWrite(pathArray)
+    pathArray.each do |path|
+      for j in 0..3
+        @@signalPathFile.syswrite(path[j].to_s+" ")
+      end
+      @@signalPathFile.syswrite("\n")
     end
   end
 
-  module_function :arrayWrite
+  module_function :signalPathWrite
 
+
+  #写入空间路径文件
+  def spacePathWrite(pathArray)
+    pathArray.each do |path|
+      for i in 0..path.length-1
+        for j in 0..2
+          @@spacePathFile.syswrite(path[i][j].to_s+" ")
+        end
+
+      end
+      @@spacePathFile.syswrite("\n")
+
+    end
+  end
+
+  module_function :spacePathWrite
+
+  def ueWrite(ueArray)
+    ueFile = File.new(File.expand_path("..")+'//Doc//UserEquipment'+".txt", "w+")
+    ueArray.each do |ue|
+      for i in 0..3
+        ueFile.syswrite(ue[i].to_s+" ")
+      end
+      ueFile.syswrite("\n")
+    end
+  end
+
+  module_function :ueWrite
 end

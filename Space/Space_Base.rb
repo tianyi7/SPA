@@ -15,6 +15,9 @@ include Math
 module Space_Base
   #两点之间的距离
   def pointDistance(beginPoint, endPoint)
+    if beginPoint == endPoint then
+      return 0.0
+    end
     x1, y1, z1 = beginPoint
     x2, y2, z2 = endPoint
     length = Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)+(z2-z1)*(z2-z1))
@@ -89,7 +92,7 @@ module Space_Base
 
   #计算路径传播时延
   def pathDelay(path,n)
-    speed = 300000000.0
+    speed = 300000000000.0
     len = 0.0
     for i in 0..n-2
       len = len + pointDistance(path[i],path[i+1])

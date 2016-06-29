@@ -13,7 +13,8 @@
 =end
 module Loss_Direct
   def direct(signalValue,distance,frequency)
-    signalValueLoss=20*log10(frequency)+20*log10(distance)+32.45
+    signalValueLoss=20*log10(frequency/1000000.0)+20*log10(distance*1.0/1000000.0)+32.45
+    p signalValueLoss
     signalValue = signalValue - signalValueLoss
     return signalValue
   end

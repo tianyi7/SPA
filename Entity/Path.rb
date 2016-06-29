@@ -11,5 +11,5 @@ class Path
   attr_accessor :ueId #终端ID
   attr_accessor :loss #损耗
   attr_accessor :delay #时延
-  attr_accessor :coordinate #几何路径坐标
+  attr_accessor :pointArray#几何路径坐标
 end

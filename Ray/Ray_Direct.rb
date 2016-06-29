@@ -12,13 +12,15 @@
 备注:
 =end
 module Ray_Direct
-  def direct(beginPoint, endPoint, singal)
+  def direct(ne, ue, singal)
+    beginPoint = ne.coordinate
+    endPoint = ue.coordinate
     directPointArray = [beginPoint, endPoint] #交点数组
     pointNumber = directPointArray.length
     directDelay = Space_Base.pathDelay(directPointArray, pointNumber) #计算时延
-    directDistance = Space_Base.pathDistance(directPoint, pointNumber) #计算距离
+    directDistance = Space_Base.pathDistance(directPointArray, pointNumber) #计算距离
     directLossValue = Loss_Direct.direct(singal.strength, singal.frequency, directDistance) #计算损耗
-    directPath = [directLossValue, directDelay, directPoint] #直射路径数组
+    directPath = [directLossValue, directDelay, directPointArray] #直射路径数组
     return directPath
   end
 

@@ -8,14 +8,19 @@
 日期：2016.3.20
 备注：无
 =end
-require File.join(File.expand_path(".."),'/IO/SPA_Read')
-require File.join(File.expand_path(".."),'/IO/SPA_Write')
-require File.join(File.expand_path(".."),'/Data/Data_Convert')
-require File.join(File.expand_path(".."),'/Ray/Ray_Refract')
-require File.join(File.expand_path(".."),'/Ray/Ray_Reflect')
-
+require File.join(File.expand_path(".."), '/IO/SPA_Read')
+require File.join(File.expand_path(".."), '/IO/SPA_Write')
+require File.join(File.expand_path(".."), '/Data/Data_Convert')
+require File.join(File.expand_path(".."), '/Ray/Ray_Refract')
+require File.join(File.expand_path(".."), '/Ray/Ray_Reflect')
+require File.join(File.expand_path(".."), '/Entity/Path')
+require File.join(File.expand_path(".."), '/Data/Data_Review')
+require File.join(File.expand_path(".."), '/Data/Data_Test')
+require 'benchmark'
 def rayTracing
   p "rayTracing"
+  ueData = Data_Test.ue(500)
+  SPA_Write.ueWrite(ueData)
   #创建日志文件,OSX环境
   SPA_Write.createFile(2)
   #数据文件名
@@ -24,24 +29,41 @@ def rayTracing
   ueFile = File.expand_path("..")+"/Doc/UserEquipment.txt";
   singalFile = File.expand_path("..")+"/Doc/Signal.txt";
   #获取数据
-  planeArray = SPA_Read.plane(planeFile)
-  neArray = SPA_Read.ne(neFile)
-  ueArray = SPA_Read.ue(ueFile)
-  signalArray = SPA_Read.signal(singalFile)
-  beginPoint = neArray[0].coordinate
-  endPoint = ueArray[0].coordinate
-  singal = signalArray[0]
+  planeArray = SPA_Read.plane(planeFile) #平面数组
+  neArray = SPA_Read.ne(neFile) #网元数组
+  ueArray = SPA_Read.ue(ueFile) #终端数组
+  signalArray = SPA_Read.signal(singalFile) #信号数组
   #平面数据转换成物体数据
   cubeArray = Data_Convert.planeToCube(planeArray)
-  #直射计算
-  #折射计算
-  refractPath = Ray_Refract.refract(beginPoint,endPoint,cubeArray,singal)
-  #反射计算
-  reflectPath = Ray_Reflect.reflect(beginPoint,endPoint,cubeArray,singal)
-  SPA_Write.pathWrite(reflectPath)
-  p refractPath
-  return reflectPath
+  #创建路径数组
+  pathArray = Array.new
+  #总径计算
+  ueArray.each do |ue|
+    neArray.each do |ne|
+      #获取信号
+      signal = Data_List.signalById(ne.id,signalArray)
+      #折射计算
+      refractPath = Ray_Refract.refract(ne, ue, cubeArray, signal)
+      #反射计算
+      reflectPathArray = Ray_Reflect.reflect(ne, ue, cubeArray, signal)
+      reflectPathArray.push(refractPath)
+      #转换后删除空的数组
+      reflectPathArray = Data_Convert.deleteNilPath(reflectPathArray)
+      #不为空的路径加入路径数组
+      if reflectPathArray.length !=0 then
+        pathArray = pathArray + Data_Convert.convertPath(ne, ue, reflectPathArray)
+      end
+    end
+  end
+  signalPathArray = Data_Convert.pathToSignalPath(pathArray)
+
+  spacePathArray = Data_Convert.pathToSpacePath(pathArray)
+  #写入信号路径
+  SPA_Write.spacePathWrite(spacePathArray)
+  #写入空间路径
+  SPA_Write.signalPathWrite(signalPathArray)
+  return pathArray
 end
 
 p rayTracing
-
+p Benchmark.realtime
